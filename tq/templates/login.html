@@ -1,0 +1,445 @@
+<!DOCTYPE html>   
+<html lang="en">   
+<head>   
+<meta charset="utf-8">   
+<title>Tarams Quora</title>   
+<meta name="description" content="Twitter Bootstrap Version2.0 inline form layout example from w3resource.com.">   
+<link href="/media/twitter-bootstrap-37d0a30/docs/assets/css/bootstrap.css" rel="stylesheet"> 
+<script src="/media/twitter-bootstrap-37d0a30/docs/assets/js/jquery.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="/media/twitter-bootstrap-37d0a30/docs/assets/css/bootstrap-responsive.css" rel="stylesheet">  
+<link REL="SHORTCUT ICON" HREF="/media/fav.png"/>
+<style>
+
+
+html,body {
+    padding:0px;
+    margin:0px;
+    height:100%;
+    font-size:10px;
+   
+}
+
+@media screen and (max-width:768px) and (min-width:481px){
+
+    .forgot-pass-button {
+    margin-left:200px;
+    background:none;
+    border:0px;
+    color:#999999;
+    cursor:pointer }
+    
+    .submit-link:hover 
+        {
+            border:0px;background-color:#19558D;color:white;
+            border-radius: 3px 3px 3px 3px;
+            border-style: solid;
+            border-width: 1px;
+            padding: 3px 10px;
+            text-align: center;
+            text-shadow: 0 1px #F0F0F0
+            font-family:"Helvetica Neue",Arial,sans-serif;
+        }   
+
+
+   .gmail-div
+    {
+       margin-top:30px;
+    }
+
+  .submit-button
+    {
+        color:white;
+        font-family:times;
+    
+        text-align:center;
+   
+        width:300px;
+        height:50px; 
+        border:0px;
+        background-color:#19558D;
+        border-radius: 5px 5px 5px 5px;
+        border-style: solid;
+        border-width: 1px;
+        padding: 3px 10px;
+   
+    }
+
+ .alert_parent_div
+    {
+        height:50px;
+        width:280px;
+        margin-top:60px;
+        
+        font-size:10px;
+
+    }
+    .input-box
+    { 
+        width:19%;
+        height:5%;
+        border-radius:0px 0px 0px 0px !important;
+        font-size:10px;
+    }
+    .login-div-form
+    {
+          
+           margin-top:20px;
+           font-size:10px;
+    }
+
+ .terms
+    {
+        margin-top:170px;
+        color:#999999
+       
+    }
+    .t&c
+    {
+        font-size:10px;
+    }
+.submit-link
+    {
+        margin-top: -12px;
+        margin-left: 12px;
+        width: 70px;
+        height: 29px;
+        font-size:10px;
+
+    }
+.submit-button
+    {
+        font-size:20px;
+    }
+
+
+}
+
+@media screen and (max-width:1024px) and (min-width:769px){
+
+    .forgot-pass-button {
+    margin-left:200px;
+    background:none;
+    border:0px;
+    color:#999999;
+    cursor:pointer }
+    
+    .submit-link:hover 
+        {
+            border:0px;background-color:#19558D;color:white;
+            border-radius: 3px 3px 3px 3px;
+            border-style: solid;
+            border-width: 1px;
+            padding: 3px 10px;
+            text-align: center;
+            text-shadow: 0 1px #F0F0F0
+            font-family:"Helvetica Neue",Arial,sans-serif;
+        }   
+
+    .submit-button
+    {
+        color:white;
+        font-family:times;
+    
+        text-align:center;
+   
+        width:300px;
+        height:50px; 
+        border:0px;
+        background-color:#19558D;
+        border-radius: 5px 5px 5px 5px;
+        border-style: solid;
+        border-width: 1px;
+        padding: 3px 10px;
+   
+    }  
+
+
+  .image
+    {
+        width:100%;
+        
+    }
+    .submit-button
+    {
+        font-size:28px;
+    }
+    .submit-link
+    {
+        margin-top: -12px;
+        margin-left: 12px;
+        width: 70px;
+        height: 29px;
+        font-size:10px;
+
+    }
+   
+    .login-div-form
+    {
+          
+           margin-top:20px;
+           font-size:10px;
+    }
+    .input-box
+    { 
+        width:19%;
+        height:5%;
+        border-radius:0px 0px 0px 0px !important;
+        font-size:10px;
+    }
+    
+    .terms
+    {
+        margin-top:370px;
+        color:#999999
+       
+    }
+    .t&c
+    {
+        font-size:10px;
+    }
+    .alert_parent_div
+    {
+        height:50px;
+        width:300px;
+        margin-top:60px;
+      
+        font-size:10px;
+
+    }
+    .gmail-div
+    {
+       margin-top:30px;
+    }
+
+}
+
+@media screen and (min-width:1025px)
+{
+    .forgot-pass-button {
+    margin-left:200px;
+    background:none;
+    border:0px;
+    color:#999999;
+    cursor:pointer }
+    
+
+        .submit-link:hover 
+        {
+            border:0px;background-color:#19558D;color:white;
+            border-radius: 3px 3px 3px 3px;
+            border-style: solid;
+            border-width: 1px;
+            padding: 3px 10px;
+            text-align: center;
+            text-shadow: 0 1px #F0F0F0
+            font-family:"Helvetica Neue",Arial,sans-serif;
+        }   
+
+
+
+
+    .submit-button
+    {
+       color:white;
+        font-family:times;
+    
+        text-align:center;
+   
+        width:300px;
+        height:50px; 
+        border:0px;
+        background-color:#19558D;
+        border-radius: 5px 5px 5px 5px;
+        border-style: solid;
+        border-width: 1px;
+        padding: 3px 10px;
+   
+    }   
+
+
+     .image
+    {
+        width:100%;
+        
+    }
+    .submit-button
+    {
+       
+        font-size:28px;
+        
+    }
+    .gmail-div
+    {
+       margin-top:85px;
+    }
+    .submit-link
+    {
+        margin-top: -12px;
+        margin-left: 12px;
+        width: 70px;
+        height: 29px;
+        font-size:10px;
+
+    }
+  
+    .login-div-form
+    {
+         
+           margin-top:20px;
+           font-size:10px;
+    }
+    .input-box
+    { 
+        width:19%;
+        height:5%;
+        border-radius:0px 0px 0px 0px !important;
+        font-size:10px;
+    }
+    
+    .terms
+    {
+        margin-top:560px;
+        color:#999999
+       
+    }
+    .t&c
+    {
+        font-size:10px;
+        
+    }
+    .alert_parent_div
+    {
+        height:50px;
+        width:464px;
+        margin-top:60px;
+       
+        font-size:10px;
+
+    }
+
+
+}
+
+
+
+
+
+.full-content
+{
+padding:0px 0px;
+}
+
+
+ .image
+{
+height:100%;
+padding-left:0px;
+}
+
+ .forgot-pass-button:hover{text-decoration:underline} 
+
+
+
+.submit-button:hover
+{
+text-decoration:none;
+color:white;
+}
+
+.submit-button::before {
+content: url(//d1vgw4v7ja2ido.cloudfront.net/-5954f7fbcd0b2de7.png);
+}
+
+
+
+
+
+    
+</style>
+
+<script>
+
+$(document).ready(function(){
+    $(".alert_div").hide();
+    $(".alert_close").click(function(){
+        $(".alert_div").hide();
+});
+});
+ function check_password(obj)
+ {
+
+  $.ajax({
+                type: "POST",
+                url: "/quora/new" + "/",
+                data: {'username': $(obj).prev().children().val()},
+                datatype:"Text",
+                success: function(response) {
+                if (response.msg == "empty")
+                {
+                   $(".alert_div").addClass("alert-info"); 
+                    $(".alert_div").removeClass("alert-error");
+                    $(".alert_div").removeClass("alert-success");
+                }
+                else if(response.msg == "not-exist")
+                {
+                   $(".alert_div").addClass("alert-error");
+                    $(".alert_div").removeClass("alert-info");
+                    $(".alert_div").removeClass("alert-success"); 
+                }
+                else
+                {
+                   $(".alert_div").addClass("alert-success"); 
+                    $(".alert_div").removeClass("alert-info");
+                    $(".alert_div").removeClass("alert-error");
+                }
+                        $(".alert_box").html(response.val);
+                        $(".alert_div").fadeIn(500);
+                        $(".alert_div").delay(4000).fadeOut('slow');
+
+                        
+                },
+                error: function(rs, e) 
+                {
+                    alert(rs.responseText);
+                }
+          });
+
+}
+</script> 
+</head>  
+<body>  
+
+    <div class="container-fluid full-content">
+        <div class="row-fluid">
+            <div class="span6">
+                <img class="image" src="media/qhome.jpeg" >
+            </div>
+            
+            <div class="loginpart span6">
+                
+                <div class="alert_parent_div">
+                 <div class="alert alert_div">
+                        <button type="button" class="close alert_close" data-dismiss="alert">&times;</button>
+                        <span class="alert_box"> </span>
+                 </div>
+                </div>
+                 
+                <div class="login-div-form">
+                    <form action="{% url 'views.home' %}" method="POST">  
+                        <input type="text" class="input-box" placeholder="Email" name = "username" />  
+                        <input type="password" class="input-box" placeholder="Password" name = "password" />
+                        <button type="submit" class="submit-link" name ="sub">Sign in</button>  
+                    </form>  
+                    <button class="change-password forgot-pass-button" onclick = "check_password(this)">Forgot password ?</button>
+                </div>            
+                  
+                <div class="gmail-div"><a href="/google/login/" class="submit-button">Sign up with Gmail</a></div>
+                <div class="terms"> <p class="t&c">By clicking "Sign Up", you are indicating that you have read and agree to the <a href="">Terms of Service</a></p></div>          
+            </div>
+       </div>
+    </div>
+
+
+</body>  
+</html>

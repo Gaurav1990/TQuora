@@ -1,0 +1,26 @@
+<html>
+    <head>
+
+   <link href="/media/twitter-bootstrap-37d0a30/docs/assets/css/bootstrap.css" rel="stylesheet"> 
+   <link rel="stylesheet" type="text/css"/>
+   <link rel="stylesheet" href="/media/complete.css" />
+  
+<title>set new password</title>
+</head>
+
+<body>
+
+<div class="set-div">
+<form action="{% url 'quora.views.fresh_password' %}" method="post">
+<p><label>{{ form.username.label }}</label><span class="q-attributes"> {{form.username }}</span></p>
+<p><label>New password</label><span class="q-attributes"> {{form.password }}</span></p>
+<input type="submit" class="btn btn-primary"value="set password"/>
+</form>
+</div>
+<div class="forgot-image">
+  <img src="/media/forgot.jpg" style="width:250;height:250">
+</div >  
+
+</body>
+</html>
+

@@ -1,0 +1,429 @@
+{% extends "base.html" %}
+
+{% block head %}
+ {% block title %}{{ question.tags }} : {{ question.title }}{% endblock %}
+
+<link rel="stylesheet" href="/media/question_detail.css" />
+<script src="/media/editor.js"></script>
+    <script type="text/javascript">
+	        bkLib.onDomLoaded(function() { nicEdi{{answer_data.first_2_users_str}}tors.allTextAreas() });
+    </script>
+
+<script src="/media/all_ajax_fun.js"></script>
+<script src="/media/jquery.autosize.min.js">
+
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $('#question-textarea').autosize();
+
+});
+</script>
+<style type="text/css">
+  .submit-link { 
+    background:none;
+    border:0;
+    color:#2E9AFE;
+    cursor:pointer;   
+    } 
+.user_full_desc
+{
+    font-size:12px;
+}
+
+.div11, .div22
+{
+display:inline-block;
+}
+.menu li a
+{
+    font-size: 14px;
+}
+.div1, .div2, .div3
+{
+display:inline-block;
+margin:2px;
+}
+
+.sub
+{
+
+    background: #fff;
+    position: absolute;
+    z-index: 1;
+    width: 250px;
+    
+    padding: 5px 0 1px;
+    border-radius: 2px;
+    box-shadow: 0 2px 4px #ddd;
+    border: 1px solid #ddd;
+    display: none;
+}
+</style>
+
+
+{% endblock %}
+
+{% block content %}
+
+
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span8">
+            <p>
+                <a href=""><span class="tags" >{{ question.tags }}</span></a>
+            </p>
+            <p>
+                <span class ="question-style" id="question_id">{% autoescape off %}{{ question.title }}{% endautoescape %} </span>
+                <button id = "edit_button" class="submit-links" onclick="answer_comment_show(this);">Edit</button>
+            </p>
+
+            <div id="editor">   
+                <form action = "/quora/edit-question/{{ question.id }}/" method = "POST">
+                    <textarea class="textboxes" type="text" name = "edit_ques" id = "question-textarea" >{{ question.title }}</textarea>
+                    <button class="submit-button">Update</button>
+                </form>
+                <button id = "cancel_button" class="submit-links">Cancel</button>
+            </div>
+            <div class ="half-data">{{ question.description }}</div>
+            <button class="more submit-link" onClick="javascript:more_data($(this))">(more)</button>
+            <div class = "full-data"> {% autoescape off %}{{ question.description }}{% endautoescape %}</div>
+            <button id="question-comment" class = "submit-links" onclick="question_comment_show(this)">
+                <span>{{ no_of_comment }}</span>+ Comment
+            </button>
+     
+            <div class="question-comment-div">
+              <span><a href="/quora/user_detail/{{request.user.id}}">{% if profile.profile_pic == '' %}
+                       <img  src="/media/profile_imgs/man.png/" height="25" width="25"/>
+                     {% else %}
+                        <img  src="/media/{{ profile.profile_pic }}" height="25" width="25"/>
+                     {% endif %} 
+                              {{ user.first_name }}&nbsp;{{ user.last_name }}</a>
+      
+                    <input type="text" name = "ques_comment">
+                    <input onclick = "comment_question_show(this,{{ question.id }},{{request.user.id}});" class="submit-button input-submit"  type="submit" value="Comment">
+             </span>
+            <span>
+            {% for item in list_like_model reversed %}
+            
+                {% ifequal item.post_id question.post_id %}
+                    <span>
+                    <hr>
+                        <p>
+                                <div class="usernames">
+
+
+                                     <div class="menu div2" >
+                                        <input type="hidden" name="{{item.user_id}}" value="{{item.user_id}}">
+                                        <a class="usernames on_hover" href="/quora/user_detail/{{item.user_id}}">
+                            {% for pic in userprofile %}
+                                {% ifequal item.user.id pic.user_id %}
+                                    {% ifequal pic.profile_pic '' %}
+                                        <img src="/media/profile_imgs/man.png/" height="25" width="25"/>
+                                        {{ pic.user.first_name }} {{ pic.user.last_name }}
+                                    </a></div>
+                                  {% else %}
+                                      <img src="/media/{{ pic.profile_pic }}/" height="25" width="25"/>
+                                      {{ pic.user.first_name }} {{ pic.user.last_name }}</a></div>
+                               {% endifequal %}
+                         {% endifequal %}
+                    {% endfor %}
+
+</a></div>
+                                <span class="voters">{{ item.total_likes }}</span>
+                                        vote(s) given by
+                                <span class= "usernames voters half-data">{{item.first_2_users_str}}</span> 
+                            {% if  item.total_likes > 2 %}
+                                <button class="more submit-links">(more)</button>
+                            {% else %}
+                                <span></span>
+                            {% endif %}
+                                <span class = "voters full-data">{{item.str_users}}</span> 
+                                <input type="hidden" value="" />
+                           
+                        </p>
+              
+                        <p> {% autoescape off %} {{ item.comment }} {% endautoescape %}</p>
+                        <p>
+                            <span>
+                                <button class = "like submit-links" id = "id-{{ item.id }}" onclick="comment_like_method(this,{{ item.id }});" >Like</button>
+                                <button class = "unlike submit-links" onclick="comment_unlike_method(this,{{ item.id }} );">Unlike</button>
+                                {% ifequal item.user_id request.user.id %}
+                   
+                                    <input onclick = "comment_question_delete(this,{{ question.id }},{{ item.id }});" class="submit-links input-submit"  type="submit" value="Delete">
+                                {% endifequal %}
+                                {{ item.created_date }}
+                          </span>
+                       </p>
+                    </span>
+                {% endifequal %} 
+            
+
+            {% for com in comment_like %}
+                {% if com.user == request.user %}
+                    {% if com.comment_id == item.id %}
+                        {% if com.likes == 1 %}
+
+                            <script type="text/Javascript">
+                                $(document).ready(function(){
+                                $("#id-{{item.id}}").hide();
+                                $("#id-{{item.id}}").next().show();
+                                });
+                            </script>        
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+
+            {% endfor %}
+
+        {% endfor %}
+       </span>
+        </div>
+        <hr><b>
+            {{ no_of_answer }} Answers
+        </b><hr>
+         <form method = "POST">
+                    <div class = "div1">
+                        {% if profile.profile_pic == '' %}
+                            <img  src="/media/profile_imgs/man.png/" height="25" width="25"/>
+                        {% else %}
+                            <img  src="/media/{{ profile.profile_pic }}" height="25" width="25"/>
+                        {% endif %}
+                    </div>
+                                
+
+                             <div class="menu div2" >
+                                        <input type="hidden" name="{{request.user.id}}" value="{{request.user.id}}">
+                                        <a class="usernames on_hover" href="/quora/user_detail/{{request.user.id}}">{{ profile.user.first_name }} {{ profile.user.last_name }}</a>
+                                     </div>
+
+
+                    <div class="div3 usernames">
+                        {% if profile.user_desc != "" %}
+                            ,{{ profile.user_desc }}
+                        {% endif %}
+                    </div>
+                        <p>{{ form_ans.description }}</p>
+            <input type="button" id="comet" class="submit-button server" value = "Add Answer" onclick="add_answer(this,'{{ question.tags | slugify }}','{{ question.title | slugify }}',{{question.id}},{{request.user.id}});">
+       </form>
+       
+    <span>
+{% for answer_data in ans_list reversed %}
+    <span><hr>
+
+
+                                    <div class="menu div2" >
+                                        <input type="hidden" name="{{answer_data.user.id}}" value="{{answer_data.user.id}}">
+                                        <a class="usernames on_hover" href="/quora/user_detail/{{answer_data.user.id}}">
+
+            {% for pic in userprofile %}
+                     {% if answer_data.user.id == pic.user_id %}
+                            {% if pic.profile_pic == '' %}
+                                {{ pic.user.first_name }} {{ pic.user.last_name }}</a></div>
+
+                                <img class="pic"  src="/media/profile_imgs/man.png/" height="25" width="25"/>
+                                
+                                      {% else %}
+                             {{ pic.user.first_name }} {{ pic.user.last_name }}</a>
+                                    </div>
+                                 <img class="pic"  src="/media/{{ pic.profile_pic }}/" height="25" width="25"/>
+                            {% endif %}
+                           
+                   {% endif %}
+            
+            {% endfor %}
+                     
+
+        <span  class="votes_likes voters">
+            {{ answer_data.number }} 
+        </span>  vote(s) given by
+    <span class= "usernames voters half-data">{{answer_data.first_2_users_str}}</span> 
+{% if answer_data.number > 2 %}
+        <button class="more submit-links">(more)</button>
+{% else %}
+    <span></span>
+{% endif %}
+        <span class = "voters full-data">{{answer_data.str_names}}</span> 
+        <input type="hidden" value="{{answer_data.likes_count}}" />
+        <div class="demo">
+            {% autoescape off %} {{ answer_data.description }}{% endautoescape %}
+        </div>
+        <p>
+            <button class="submit-links answer-comment" onclick="answer_comment_show(this);">
+                <span>{{ answer_data.answer_comment }}</span> +Comment
+            </button>
+            {% ifequal answer_data.user_id request.user.id %}
+
+               <!-- <a href= "/quora/answer/delete/{{ answer_data.id }}/">Delete</a> -->
+            <input onclick = "delete_answer(this,{{answer_data.id}});" class="submit-links input-submit"  type="submit" value="Delete">
+            {% endifequal %}
+            <button class="like submit-links" onclick="like_method(this,{{answer_data.id}});" id = "id-{{answer_data.id}}">Like</button>
+            <button class="unlike submit-links" onclick="unlike_method(this,{{answer_data.id}});" id = "id-unlike-{{answer_data.id}}">UnLike</button>
+            {{ answer_data.created_date }}
+   
+        </p>
+
+        <div class="answer-comment-div">
+          <p><a href="/quora/user_detail/{{item.user.id}}">{% if profile.profile_pic == '' %}
+              <img  src="/media/profile_imgs/man.png/" height="25" width="25"/>
+              {% else %}
+               <img  src="/media/{{ profile.profile_pic }}" height="25" width="25"/>
+                {% endif %}
+                {{ profile.user.first_name }} {{ profile.user.last_name }}</a>
+                <input type="text" name = "answer_comment">
+                <input onclick = "comment_answer_show(this,{{ answer_data.id }},{{request.user.id}});" type="submit" class="submit-button input-submit" value="comment">
+            </p>
+
+     <span>  
+            {% for item in list_like_model reversed %}
+            
+                {% ifequal item.post_id answer_data.post_id %}
+
+                <span>
+                <hr>            
+                   <p>
+                        <span class="usernames">
+
+                         
+
+                        {% for pic in userprofile %}
+                          {% if item.user.id == pic.user_id %}
+                                {% if pic.profile_pic == '' %}
+                                 
+                                    <div class="menu div2" >
+                                        <input type="hidden" name="{{item.user_id}}" value="{{item.user_id}}">
+                                        <a class="usernames on_hover" href="/quora/user_detail/{{item.user_id}}">
+                                              <img  src="/media/profile_imgs/man.png/" height="25" width="25"/>{{ pic.user.first_name }} {{ pic.user.last_name }}
+                                        </a>
+                                         
+                                     </div>
+                               {% else %}
+
+                                      <div class="menu div2" >
+                                          <input type="hidden" name="{{item.user_id}}" value="{{item.user_id}}">
+                                          <a class="usernames on_hover" href="/quora/user_detail/{{item.user_id}}">
+                                                <img  src="/media/{{ pic.profile_pic }}/" height="25" width="25"/>{{ pic.user.first_name }} {{ pic.user.last_name }}
+                                          </a>
+                                         
+                                     </div> 
+                                       
+                             {% endif %}
+                           
+                          {% endif %}
+                      {% endfor %}
+
+
+
+
+
+                                            
+      
+
+
+</span>
+
+
+
+
+
+
+
+                        <span class="voters">{{item.total_likes}}</span> vote(s) given by
+                        
+                        <span class= "usernames voters half-data">{{item.first_2_users_str}}</span> 
+                        {% if item.total_likes > 2 %}
+                            <button class="more submit-links">(more)</button>
+                        {% else %}
+                            <span></span>
+                        {% endif %}
+                        <span class = "voters full-data">{{item.str_users}}</span> 
+                        <input type="hidden" value="{{item.likes_count}}" />
+                   </p>
+                   <p>
+                        <span>{{ item.comment }}</span>
+                   </p>
+                 <p>
+                        <button class = "like submit-links" id = "id-ans-{{item.id}}" onclick="comment_answer_like_method(this,{{ item.id }});">Like</button>
+                        <button class = "unlike submit-links" onclick="comment_answer_unlike_method(this,{{ item.id }});">Unlike</button>
+       
+                        {% ifequal item.user_id request.user.id %}
+                
+                    
+                                <input onclick = "comment_answer_delete(this,{{ answer_data.id }},{{ item.id }});" class="submit-links input-submit"  type="submit" value="Delete">
+                        {% endifequal %}
+                                {{ item.created_date }}
+                    </p>
+                    <br>
+
+                    {% for com in comment_like %}
+                        {% if com.user == request.user %}
+                               {% if com.comment_id == item.id %}
+                                   {% if com.likes == 1 %}
+
+                                         <script type="text/Javascript">
+                                                    $(document).ready(function(){
+                                                   $("#id-ans-{{item.id}}").hide();
+                                                    $("#id-ans-{{item.id}}").next().show();
+                                                     });
+
+                                        </script>        
+                                    {% endif %}
+                                {% endif %}
+                        {% endif %}
+                    {% endfor %}        
+                </span>
+
+            {% endifequal %}
+
+    
+        {% endfor %}
+    </span>    
+    </div>
+                
+{% for item in liked %}
+    {% if item.user == request.user %}
+         {% if item.answer.id == answer_data.id %}
+             {% if item.likes == 1 %}
+
+     <script type="text/Javascript">
+$(document).ready(function(){
+                $("#id-unlike-{{answer_data.id}}").show();
+                $("#id-unlike-{{answer_data.id}}").prev().hide();
+                
+     });
+</script>        
+    {% endif %}
+    {% endif %}
+    {% endif %}
+{% endfor %}
+
+
+</span>
+{% endfor %}
+</span>
+</div>
+
+
+
+
+<div class="span4">
+             <br><br>
+                <button class="follow-question follow-button"> Follow Question </button>
+              <h5>Related Questions</h5> 
+                              {% for item in related_questions %}
+                        {% if item.title != query.title %}
+                        
+<a href = "/quora/question/{{ item.tags|slugify }}/{{ item.title|slugify }}/"><span class="new">{{ item.tags }} : {{ item.title }}</a><br><br>          {% endif %}      
+{% endfor %}<hr>
+
+			<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://127.0.0.1:8000/quora/" data-text="TQ" data-via="tq" data-size="large" data-related="tq" data-dnt="true">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

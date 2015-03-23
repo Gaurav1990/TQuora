@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block head %}
+ {% block title %}Forgot-Password{% endblock %}
+
+ {% endblock %}
+
+{% block content %}
+  
+  <center><div>
+        <h1><center>GET NEW PASSWORD</center></h1><hr><hr>
+       <form action = "{% url 'quora.views.new_password' %}" method="post">
+
+        {{ form.as_p }}
+      <input type="submit" class="btn btn-primary" value="Submit">
+    </form>
+ 
+</div></center>
+  
+{% endblock %}
+

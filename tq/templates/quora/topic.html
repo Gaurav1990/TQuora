@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+ {% block head %}
+ 
+ 
+<link rel="stylesheet" href="/media/complete.css" />
+ 
+  {% endblock %}
+
+{% block content %}
+
+
+ <div class="question-form">
+    <div class="topic-container">
+        <h5> Create Topic</h5><hr>
+        
+            <form action="" method="post" enctype="multipart/form-data">
+       
+                <div class ="outer-div">
+                    <label for="name">Name:</label>
+                    <div class="name-div inner-div ui-widget">
+                        <input id="name" class="q-attributes" type="text" name="tag" onkeyup="get_Topic_Data(this,this.value);"/>
+                    </div>        
+                </div>
+     
+                <div class ="outer-div">
+                     <label for="tags">About:</label>
+                     <div class="question-div inner-div">
+                            <input class="q-attributes" id="about" type="text" name ="about"/>
+                     </div>
+                </div>
+        
+                <div class ="outer-div">
+                    <label for="tags">Topic image:</label>
+                    <div class="question-div inner-div">
+                        <input class="q-attributes" type="file" name ="pic"/>
+                    </div>
+                </div>     
+
+                <input class="submit-button create-topic-button" type = "submit" value = "Create Topic">
+            </form>
+     </div>
+</div>
+<script>
+    function get_Topic_Data(obj,val)
+    {
+        console.log("question_topic");
+        $.ajax({
+                type: "POST",
+                url: "/quora/question-topic-search/",
+                data: {'value': $(obj).val()},
+                datatype:"Text",
+                success: function(response) {
+                    console.log(response.topic_list);
+                    var availableTags = response.topic_list;
+                    $("#name").autocomplete({
+                        source: availableTags
+                    });
+                },
+                error: function(rs, e) 
+                {
+                    alert(rs.responseText);
+                }
+          });
+    }   
+
+</script>
+
+{% endblock %}

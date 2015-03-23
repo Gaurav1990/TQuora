@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+  
+
+    {% block head %}
+    
+     {% block title %}Unanswered-Questions{% endblock %}
+       <script src="http://code.jquery.com/jquery-1.7.2.js"></script>
+       <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
+       <link rel="stylesheet" href="/media/complete.css" />
+       
+       
+    {% endblock %}
+
+     
+    {% block content %}
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span7">
+
+                 <div id="postswrapper">
+                    <div class="item"></div>
+                        <h4>Unanswered Questions</h4>
+                        {% for item in question %}
+                            <hr><div class="hi">  
+                          <a href = "/quora/question/{{ item.slug_tags }}/{{ item.slug_title }}/"><span class="questions-style">{{ item.title }}</span></a>
+                          <p>
+                            <span class="submit-link unanswer-question ">Follow</span>
+                            <span class="submit-link unanswer-question"> 0 Follower</span>
+                            <span class="submit-link unanswer-question"><a class="submit-link" href="/quora/question/{{ item.slug_tags }}/{{ item.slug_title }}/">Add Answer</a>
+                            </span>
+                          </p>      
+                                <script type="text/javascript">
+                                var c = 2;     
+                                var throttled = _.throttle(infinite_scrolling, 5000);
+                                $(window).scroll(throttled)
+
+                                function infinite_scrolling()
+                                {
+                                    if (document.body.scrollHeight - $(this).scrollTop() <= $(this).height())
+                                       {
+            
+                                        console.log("hello");   
+                                        $.ajax({
+                                            type: "GET",
+                                            url : "/quora/unanswered-questions/",
+                                            data : "page="+c,
+                                            datatype: "json",
+                                            async:false,
+                                            success: function(data) {
+                                            console.log(data)
+                                            console.log(c)
+                                            if (data.page_num <= {{question.paginator.num_pages}}) {
+                                            console.log("success")
+                                            c = data.page_num;
+                                            str= "";
+                                            $.each(data.event_list, function(index, value){
+
+                                            str = str+"<hr><div class='hi'><a href = '/quora/question/{{ item.slug_tags }}/{{ item.slug_title }}/'><span class='questions-style'>" + value.e_name +"</span></a></div><p>
+                            <span class='submit-link unanswer-question'>Follow</span>
+                            <span class='submit-link unanswer-question'> 0 Follower</span>
+                            <span class='submit-link unanswer-question'><a class='submit-link' href='/quora/question/"+value.slug_tags+"/"+value.slug_title+"/'>Add Answer</a>
+                            </span>
+                          </p>";
+                                            console.log(str)
+                                });
+                                            $("#postswrapper").append(str);
+                             }
+                         }
+                    });
+    
+              }
+         }     
+        </script>
+                 </div>
+                        {% endfor %}
+
+                    </div>
+                 </div>    
+                 <div class="span1"></div>
+    
+            <div class="span4 sidebar-settings">
+                <p class="sidebar-p"><a  class ="sidebar-options" href ="{% url 'quora.views.scroll_home' %}" >Top Stories</a></p> 
+                <p class="sidebar-p">Unanswered Questions</p>
+                <p class="sidebar-p"><a  class ="sidebar-options" href ="" >Write Reviews</a></p>
+                <p class="sidebar-p"><a  class ="sidebar-options" href ="" >Notifications</a></p>
+                <p class="sidebar-p"><a  class ="sidebar-options" href ="" >Inbox </a></p>
+            </div>
+        </div>
+    </div>
+  
+ {% endblock %}

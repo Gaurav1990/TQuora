@@ -1,0 +1,43 @@
+.project
+================================================
+<?xml version="1.0" encoding="UTF-8"?>                                          
+  2 <projectDescription>                                                            
+  3         <name>tq</name>                                                         
+  4         <comment></comment>                                                     
+  5         <projects>                                                              
+  6         </projects>                                                             
+  7         <buildSpec>                                                             
+  8                 <buildCommand>                                                  
+  9                         <name>org.python.pydev.PyDevBuilder</name>              
+ 10                         <arguments>                                             
+ 11                         </arguments>                                            
+ 12                 </buildCommand>                                                 
+ 13         </buildSpec>                                                            
+ 14         <natures>                                                               
+ 15                 <nature>org.python.pydev.pythonNature</nature>                  
+ 16                 <nature>org.python.pydev.django.djangoNature</nature>           
+ 17         </natures>                                                              
+ 18 </projectDescription>
+
+
+
+.pydevproject
+=================================================
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>                          
+  2 <?eclipse-pydev version="1.0"?>                                                 
+  3                                                                                 
+  4 <pydev_project>                                                                 
+  5 <pydev_variables_property
+name="org.python.pydev.PROJECT_VARIABLE_SUBSTITUTION">
+  6 <key>DJANGO_MANAGE_LOCATION</key>                                               
+  7 <value>tq/manage.py</value>                                                     
+  8 </pydev_variables_property>                                                     
+  9 <pydev_property name="org.python.pydev.PYTHON_PROJECT_VERSION">python
+2.7</pydev_property>
+ 10 <pydev_property
+name="org.python.pydev.PYTHON_PROJECT_INTERPRETER">Default</pydev_property>
+ 11 <pydev_pathproperty name="org.python.pydev.PROJECT_SOURCE_PATH">                
+ 12 <path>/tq/tq</path>                                                             
+ 13 </pydev_pathproperty>                                                           
+ 14 </pydev_project>
+

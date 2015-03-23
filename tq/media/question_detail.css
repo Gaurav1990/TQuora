@@ -1,0 +1,63 @@
+
+
+#question-textarea
+{
+        border:1px solid blue;
+        border-radius: 0px;
+        
+     
+        resize: none;
+        font-weight: bold;
+}
+#question_id
+{
+        font-weight: bold;
+}
+.social-sites {height:30px; width:30px;}
+.tags {background-color:rgba(169,226,243,0.3)}
+#edit_button {color:grey}
+#add-answer-button{margin-left:310px}
+.question-detail {font-weight: bold;}
+.container-fluid {margin-left:40px;}  
+.question-style {font-size:20px;word-wrap:break-word;width:700px;white-space: pre-wrap;}
+.textboxes{font-size:20px;}
+.question-comment-div {border radius:10px 10px 10px 10px ;border:2px solid #D8D8D8;padding:10px 10px;margin-top:10px;}
+.answer-comment-div {border:2px solid #D8D8D8;padding:10px 10px;margin-top:10px;}
+.pic { float:right; margin-right:100px;}
+.usernames {font-weight:bold;}
+.voters {color:gray} 
+.input-submit{padding:5px 10px;}
+.submit-links { 
+background:none;
+border:0;
+color:#2E9AFE;
+cursor:pointer}
+.answer-form { width:400px ;height:50px;}
+.submit-links:hover{text-decoration:underline} 
+#edit_button:hover{background-color:#C3DD82;color:black }
+.tags:hover{background-color:#19558D;color:white}
+.submit-button {border:0px;background-color:#19558D;color:white;
+                border-radius: 3px 3px 3px 3px;
+                border-style: solid;
+                border-width: 1px;
+                padding: 3px 10px;
+                text-align: center;
+                text-shadow: 0 1px #F0F0F0
+                font-family:"Helvetica Neue",Arial,sans-serif;
+                }
+                
+.follow-button {border:0px;background-color:#C3DD82;color:406A24;
+                border-radius: 3px 3px 3px 3px;
+                border-style: solid;
+                border-width: 1px;
+                border-color: #8CB332 #8CB332 #648517;
+                padding: 3px 10px;
+                text-align: center;
+                text-shadow: 0 1px #F0F0F0
+                font-family:"Helvetica Neue",Arial,sans-serif;
+                }                
+                
+ p{margin-bottom:0px;}
+ hr {margin:6px 6px 6px 6px }   
+ .sidebar-options{font-family:"Helvetica Neue",Arial,sans-serif;font-weight:bold ;color:#19558D;font-size:1em;} 
+

@@ -1,0 +1,255 @@
+
+ /* base.html */
+#divhome { 
+    margin-top:80px;
+    margin-left:60px;
+}
+
+.searchbox {
+    width:400px !important ;
+    height:26px !important;
+}
+
+.container-fluid {margin-left:40px;}  
+.search-button { background-color:#FEFEFE;margin-top:-10px;}
+.navbar-inner {
+  background-color:#E0E0E0;
+  background-image:none;
+  color:#333333;
+  font-weight:bold;font-family:"Helvetica Neue",
+  Arial,sans-serif;}
+ /*end base.html*/
+
+
+
+
+/* email.html */
+p{margin-bottom:0px;}
+hr {margin:6px 6px 6px 6px;}   
+.account { border-bottom:1px solid #333333;font-family:"Helvetica Neue",Arial,sans-serif;}
+.container{ margin-left:170px;}
+.space { margin-right:270px;float:right;}
+.text {color:#666666;}
+
+/*.sidebar-options{font-family:"Helvetica Neue",Arial,sans-serif;font-weight:bold ;color:#19558D;font-size:1em;}*/
+/* end email.html */
+
+
+/* home.html */
+.topstories {font-size:1em;padding:8px;font-family:"Helvetica Neue",Arial,sans-serif} 
+  .answer {padding:8px}
+  .post-detail {color:#6E6E6E;font-family:"Helvetica Neue",Arial,sans-serif}
+  /*.sidebar-options{font-family:"Helvetica Neue",Arial,sans-serif;font-weight:bold ;color: #19558D;font-size:1em;}*/
+  .questions-style {font-family:"Helvetica Neue",Arial,sans-serif;font-weight:bold ;color: #19558D;font-size:1em;}
+  p { margin-bottom :0px;}
+  hr {margin:6px 6px 6px 6px }
+  .sidebar-p {margin-bottom:10px;font-weight: bold;}
+  .question-picture{height:40px;width:40px;border:solid black 1px;}
+  .post{margin-left:0px;}
+  .half-data {
+    line-height: 1.5em;
+    height: 3em;       
+    overflow: hidden;  
+    }
+  .usernames
+    {
+font-weight:bold;
+
+    }
+    
+  .submit-link { 
+    background:none;
+    border:0;
+    color:#2E9AFE;
+    cursor:pointer;   
+    }   
+  .timeago:hover{cursor:pointer;} 
+  .usernames{color:#333333;font-family:"Helvetica Neue",Arial,sans-serif}
+  .like-count{color:#19558D;font-weight:bold;background-color:rgba(83,141,194,0.3)}
+  .usernames:hover{color:#333333;}
+  .trending-topics-image {width:25;height:25;margin-top:5px;margin-right:5px} 
+  .sidebar-settings { margin-top: 50px;}
+/* end home.html */
+
+
+/* new.html */
+    .set-div { margin:70px 70px; float:left;width:400px;border:2px solid black;padding: 10px 10px 10px 10px;}
+    .forgot-image {float:left;width:400px;}
+
+    label{
+    margin:5px 5px;
+    display: inline-block;
+    float: left;
+    clear: left;
+    width: 100px;
+    text-align: right;
+      }
+    /*.q-attributes{display:inline-block;margin:5px 5px;}*/
+    .btn {margin-left: 250px;}
+/* end new.html */
+
+/* settings.html */
+.account { border-bottom:1px solid black; }
+
+  .row-fluid {margin-top:30px;} 
+  .acc-values { margin-left:80px; }
+  /*.submit-button {border:0px;background-color:#19558D;color:white;
+                border-radius: 3px 3px 3px 3px;
+                border-style: solid;
+                border-width: 1px;
+                padding: 3px 10px;
+                text-align: center;
+                text-shadow: 0 1px #F0F0F0
+                font-family:"Helvetica Neue",Arial,sans-serif;
+                }
+  .submit-link { 
+                background:none;
+                border:0;
+                color:#2E9AFE;
+                cursor:pointer}
+   
+  */
+  .sidebar-options{font-family:"Helvetica Neue",Arial,sans-serif;font-weight:bold ;color:#19558D;font-size:1em;} 
+   .submit-link:hover{text-decoration:underline}
+   .password-form{
+    margin-left: 150px;
+   }
+
+/* end settings.html */
+
+/* adding_question.html */
+  /*   input[type=text]{
+        font-size:12px;
+        color:#666666;
+        background-color:#ffffff;
+        padding-top:5px;
+        width:200px;
+        height:20px;
+        border:1px solid #999999;
+    }
+    
+    .opt
+    {
+        padding-top:5px;
+        width:220px;
+        height:20px;
+        border:2px solid #999999;
+        margin-left : 115px;
+        
+    }
+
+    .opt:hover {background-color:#BDEDFF;}
+
+   .dropdown-box
+    {
+    margin-top: -7px;
+    }
+       */
+   
+    .add-question-button{ margin-left:590px;margin-top:10px;} 
+    .question-container {width:595px;margin-left:100px;}
+    /* .inner-div{margin-left:110px;background-color:#EAEAEA;} 
+
+    .q-attributes{display:inline-block;margin:5px 5px;} */
+    #topic{width:200px;height:25px;}
+    #question {width:473px;height:27px;}
+    #detail {width:475px;height:40px}
+  
+/* label{
+    margin:5px 5px;
+    display: inline-block;
+    float: left;
+    clear: left;
+    width: 100px;
+    text-align: right;
+}
+
+.submit-button {border:0px;background-color:#19558D;color:white;
+                border-radius: 3px 3px 3px 3px;
+                border-style: solid;
+                border-width: 1px;
+                padding: 3px 10px;
+                text-align: center;
+                text-shadow: 0 1px #F0F0F0
+                font-family:"Helvetica Neue",Arial,sans-serif;
+                }
+ul
+{
+list-style-type:None;
+} */
+/* end adding_question.html */
+
+
+
+/* topic.html */
+
+ input[type=text]{
+        font-size:12px;
+        color:#666666;
+        background-color:#ffffff;
+        padding-top:5px;
+        width:200px;
+        height:20px;
+        border:1px solid #999999;
+    }
+    
+    .opt
+    {
+        
+        padding-top:5px;
+        width:220px;
+        height:20px;
+        border:2px solid #999999;
+        margin-left : 115px;
+        
+    }
+
+    .opt:hover {background-color:#BDEDFF;}
+
+   .dropdown-box
+    {
+    margin-top: -7px;
+    }
+    .create-topic-button { margin-left:430px;margin-top:10px;} 
+    .topic-container {width:545px;margin-left:100px;}
+    .inner-div{margin-left:110px;background-color:#EAEAEA;}
+
+    .q-attributes{display:inline-block;margin:5px 5px;}
+    #name{width:415px;height:25px;}
+    #about {width:421px;height:40px;}
+  
+  .question-form{margin-top: 60px;}
+  
+ label{
+    margin:5px 5px;
+    display: inline-block;
+    float: left;
+    clear: left;
+    width: 100px;
+    text-align: right;
+}
+
+.submit-button {border:0px;background-color:#19558D;color:white;
+                border-radius: 3px 3px 3px 3px;
+                border-style: solid;
+                border-width: 1px;
+                padding: 3px 10px;
+                text-align: center;
+                text-shadow: 0 1px #F0F0F0
+                font-family:"Helvetica Neue",Arial,sans-serif;
+                }
+ul
+{
+list-style-type:None;
+}
+
+/* end topic.html */
+
+/* unanswered.html */
+/*.sidebar-options{font-family:"Helvetica Neue",Arial,sans-serif;font-weight:bold ;color: #19558D;font-size:90%;}*/
+    .unanswer-question {margin-right:10px;margin-top: 10px;font-size: 12px; }
+    #divhome{ margin-top:5px; }
+    .side { margin-top:25px; margin-left:610px;}
+ /* end unanswered.html */ 
+
+

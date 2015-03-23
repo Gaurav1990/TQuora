@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block head %}
+{% block title %}Email prefrences{% endblock %}
+
+<link rel="stylesheet" href="/media/complete.css" />
+
+
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid ">
+     <div class="row-fluid">
+         <div class="span6">
+			<h5 class="account">Profile</h5> <hr>
+ 				<p> <span class="text">System notifications</span><input class="space" type="checkbox" name="checkbox" value="value"/></p><hr>
+ 				<p> <span class="text">Personal notifications</span><input class="space" type="checkbox" name="checkbox" value="value"/></p><hr>
+ 				<p> <span class="text">Someone starts following me</span><input class="space" type="checkbox" name="checkbox" value="value"/></p><hr>
+ 				<p> <span class="text">Someone asks me to answer a question</span><input class="space" type="checkbox" name="checkbox" value="value"/></p><hr>
+ 				<p> <span class="text">Someone suggests an edit to me of my biographies</span><input class="space" type="checkbox" name="checkbox" value="value"/></p><hr> 
+ 				<p> <span class="text">Someone accepts a biography I suggests</span><input class="space" type="checkbox" name="checkbox" value="value"/></p><hr>
+ 				<p> <span class="text">Someone sends me a message</span><input class="space" type="checkbox" name="checkbox" value="value"/></p><hr>
+ 				<p> <span class="text">Someone mentions my name</span><input class="space" type="checkbox" name="checkbox" value="value"/></p><hr>
+ 				<p> <span class="text">Someone gives me topics to follow</span><input class="space" type="checkbox" name="checkbox" value="value"/></p><hr>
+ 				<h5 class="account">Questions and Answers</h5> <hr>
+ 				<p> <span class="text">Someone follows a question I added</span><input class="space" type="checkbox" name="checkbox" value="value"/></p><hr>
+ 				<p> <span class="text">Someone promotes a question I added</span><input class="space" type="checkbox" name="checkbox" value="value"/></p><hr>
+ 				<p> <span class="text">Someone comments on answers I've written</span><input class="space" type="checkbox" name="checkbox" value="value"/></p><hr>
+ 				<p> <span class="text">Someone I follow votes on answers I've written</span><input class="space" type="checkbox" name="checkbox" value="value"/></p><hr>
+ 				<p> <span class="text">Someoneremoves my answer</span><input class="space" type="checkbox" name="checkbox" value="value"/></p><hr> 
+ 				<p> <span class="text">suggested edits on answers</span><input class="space" type="checkbox" name="checkbox" value="value"/></p><hr>
+ 				<p> <span class="text">Someone promote my answer</span><input class="space" type="checkbox" name="checkbox" value="value"/></p><hr>
+ 				<h5 class="account">Blogs and Posts</h5> <hr>
+ 				<p> <span class="text">Someone comments on posts I've written</span><input class="space" type="checkbox" name="checkbox" value="value"/></p><hr>
+ 				<p> <span class="text">Someone I follow votes on posts I've written</span><input class="space" type="checkbox" name="checkbox" value="value"/></p><hr>
+ 				<p> <span class="text">Suggested editson posts</span><input class="space" type="checkbox" name="checkbox" value="value"/></p><hr>
+ 				<p> <span class="text">Someone invites me to be a member of a blog</span><input class="space" type="checkbox" name="checkbox" value="value"/></p><hr>
+ 				<p> <span class="text">Someone gives me a blog to follow</span><input class="space" type="checkbox" name="checkbox" value="value"/></p><hr> 
+ 				<p> <span class="text">Someone suggests a post for my blog</span><input class="space" type="checkbox" name="checkbox" value="value"/></p><hr>
+ 				<p> <span class="text">Someone promotes a post I've written</span><input class="space" type="checkbox" name="checkbox" value="value"/></p><hr>
+ 				<p> <span class="text">Someone promotes my blog</span><input class="space" type="checkbox" name="checkbox" value="value"/></p><hr>
+ 		  </div>
+ 		  <div class="span1"></div>
+ 	      <div class="span5 sidebar-settings">
+                 
+        		<p class="sidebar-p"> <a class="sidebar-options" href="/quora/user-settings">Account</a></p>
+        		<p class="sidebar-p"> <a class="sidebar-options" href="">privacy</a> </p>
+        		<p class="sidebar-p"><b>Email Preferences</b></p>
+        		<p class="sidebar-p"> <a class="sidebar-options" href="">Activity on you and your Content</a></p>
+        		<p class="sidebar-p">Activity on Content you Follow</p>
+		   </div>
+	</div>
+</div>
+{% endblock %}

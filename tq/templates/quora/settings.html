@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+ {% block head %}
+   {% block title %}Account Settings - Tarams Quora{% endblock %}
+   <link rel="stylesheet" href="/media/complete.css" />
+  <style>
+  .account { border-bottom:1px solid black; }
+
+  .row-fluid {margin-top:30px;} 
+  .span4 {margin-left:30px; } 
+  .acc-values { margin-left:80px; }
+  .submit-button {border:0px;background-color:#19558D;color:white;
+                border-radius: 3px 3px 3px 3px;
+                border-style: solid;
+                border-width: 1px;
+                padding: 3px 10px;
+                text-align: center;
+                text-shadow: 0 1px #F0F0F0
+                font-family:"Helvetica Neue",Arial,sans-serif;
+                }
+  .submit-link { 
+                background:none;
+                border:0;
+                color:#2E9AFE;
+                cursor:pointer}
+   
+  .sidebar-options{font-family:"Helvetica Neue",Arial,sans-serif;font-weight:bold ;color:#19558D;font-size:1em;} 
+   .submit-link:hover{text-decoration:underline}
+   .password-form{
+    margin-left: 150px;
+   }
+  
+  </style>
+<script>
+  $(document).ready(function(){
+    $("#password").hide();
+    $("#check").click(function(){
+        $("#password").toggle();   
+    });     
+    
+ });
+</script>  
+  
+  
+ {% endblock %}
+
+
+{% block content %}
+
+
+    
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span8">
+               <h5 class="account">Account </h5>
+               <p class= "acc-attributes"> Primary Email <span class="acc-values"> {{request.user.email}}</span> </p> <hr>
+               <p>Password <span class="acc-values"><button class="submit-link change-password" id="check">Change my password</button></span></p>          
+               <div  class="password-form" id="password">
+                <form action="{% url 'quora.views.change_password' %}" method="post">
+                    <input type="password" name="change" />
+                    <input type="submit" class="submit-button" name = "submission" value="change" />
+                 </form>               
+                </div>
+             
+             
+             
+            </div>
+            <div class="span4">
+                 
+                 <p>Account </p>
+                 <p> <a class="sidebar-options" href="">privacy</a> </p>
+                 <p> <a class="sidebar-options" href="/quora/email">Email Preferences</a></p>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+

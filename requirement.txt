@@ -1,0 +1,5 @@
+django==1.5
+mysql-python
+python-openid
+django-openid-auth
+django_socketio

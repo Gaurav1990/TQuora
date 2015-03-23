@@ -1,0 +1,85 @@
+# First install nginx and flup using following code.
+
+1- sudo aptitude install nginx python-flup
+
+# Create a config file for django project
+
+2- sudo touch /etc/nginx/sites-available/sample_project
+
+# add following to sample_project
+
+***********************
+
+server
+
+{
+
+listen 80;
+server_name delivery.local;(delivery.local is server name so set it according to your need.)
+access_log /path/to/project/project name/access.log;
+error_log /path/to/project/project name/error.log;
+root /path/to/project/project name/;
+
+location /{
+
+    # host and port to fastcgi server
+    fastcgi_pass 127.0.0.1:8000;
+    fastcgi_param PATH_INFO $fastcgi_script_name;
+    fastcgi_param REQUEST_METHOD $request_method;
+    fastcgi_param QUERY_STRING $query_string;
+    fastcgi_param CONTENT_TYPE $content_type;
+    fastcgi_param CONTENT_LENGTH $content_length;
+    fastcgi_pass_header Authorization;
+    fastcgi_intercept_errors off;
+    fastcgi_param SERVER_ADDR $server_addr;
+    fastcgi_param SERVER_PORT $server_port;
+    fastcgi_param SERVER_NAME $server_name;
+    fastcgi_param SERVER_PROTOCOL $server_protocol;
+    fastcgi_param REMOTE_ADDR $remote_addr;
+
+    }
+    #To add proxy server or websocket like socketio or gevent add the following in the config file.
+
+location /socket.io/
+
+  {
+
+       proxy_pass http://127.0.0.1:9000;
+
+       proxy_http_version 1.1;
+
+       proxy_set_header Upgrade $http_upgrade;
+
+       proxy_set_header Connection "upgrade";
+
+  }
+
+}
+
+*******************
+
+# Create host for your server name to map the ip address or local address.
+
+3- sudo vim /etc/hosts
+
+    #add following
+
+   ->>127.0.0.1  server name(from sample_project file)
+
+#Create a symlink for ur django project
+
+4- cd /etc/nginx/sites-enabled
+
+     ->>ln -s ../sites-available/sample_project
+
+#Run this following command
+
+5- python manage.py runfcgi method=threaded port=8000 host=127.0.0.1
+
+	
+
+
+
+
+	
+

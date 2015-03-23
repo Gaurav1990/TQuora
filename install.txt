@@ -1,0 +1,7 @@
+1. check if you have python2.7-dev installed.
+if not. 
+
+apt-get install ptyhon2.7-dev
+
+run requirement.txt by
+pip install -r requirement.txt

@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}Add New Question - Tarams Quora{% endblock %}
+
+ {% block head %}
+
+
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+  
+  
+  <link rel="stylesheet" href="/media/complete.css" />
+  <script type="text/javascript">
+    function get_Topic_Data(obj,val) {
+    console.log("question_topic");
+    $.ajax({
+                    type: "POST",
+                    url: "/quora/question-topic-search/",
+                    data: {'value': $(obj).val()},
+                    datatype:"Text",
+                    success: function(response) {
+                        console.log(response.question_list);
+                        console.log(response.topic_list);
+                        var availableTopics = response.topic_list;
+                        var availableQuestions = response.question_list;
+                        $("#topic").autocomplete({
+                            source: availableTopics
+                        });
+                        $("#question").autocomplete({
+                            source: availableQuestions
+                        });
+                    
+                    },
+                    error: function(rs, e) 
+                    {
+                        alert(rs.responseText);
+                    }
+            });
+  }
+
+
+  </script>
+{% endblock %}
+{% block content %}
+ <div class="question-form">
+    <div class="question-container">
+        <h5> Add Question </h5><hr>
+            {% ifequal state "Question already exist"  %}
+             <script>
+              $(document).ready(function(){
+                 alert("Question already Exist");
+             });
+             </script> 
+            {% endifequal %}    
+            <form action="{% url 'quora.views.saving_question' %}" method="post" enctype="multipart/form-data">
+            <h2></h2>
+      <div class ="outer-div">
+            <label for="topic">Topic:</label>
+            <div class="topic-div inner-div ui-widget">
+                    <input id="topic" class="q-attributes" type="text" placeholder="Select Topic" name="tags" 
+                         onkeyup="get_Topic_Data(this,this.value);"/>
+            </div>        
+     </div>
+        <div class ="outer-div">
+            <label for="tags">Question:</label>
+            <div class="question-div inner-div">
+                <input class="q-attributes" id="question" type="text" placeholder="Type question here" name = "tag" onkeyup="get_Topic_Data(this,this.value);"/>
+            </div>
+        </div>
+        
+         
+        <div class ="outer-div">
+            <label>Detail:</label>
+              <div class="detail-div inner-div">
+                 <input class="q-attributes" id="detail" type="text" placeholder="Optional: Provide more details about your question" name="description"/>
+              </div>
+        </div>
+    </div>
+        
+     <input class="submit-button add-question-button" type = "submit" value = "Add Question">
+</form>
+</div>
+
+
+{% endblock %}
+
+

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title class="title"> {% block title %}Tarams- Quora{% endblock %}</title>
+        <meta charset="utf-8" />
+            <link REL="SHORTCUT ICON" HREF="/media/fav.png"/>
+            <link href="/media/twitter-bootstrap-37d0a30/docs/assets/css/bootstrap.css" rel="stylesheet">  
+            <script src="/media/twitter-bootstrap-37d0a30/docs/assets/js/jquery.js"></script> 
+            <script src="/media/twitter-bootstrap-37d0a30/docs/assets/js/bootstrap-dropdown.js"></script>
+            <script src="/media/all_ajax_fun.js"></script>
+            <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+            <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+            
+
+        <script>
+        $(document).ready(function(){
+             $(".write").hover(function(){
+                $(".write-menu").show();
+             });
+             $(".write").mouseleave(function(){    
+                $(".write-menu").hide();
+          });
+        });
+        
+           $(document).ready(function(){
+             $(".home").hover(function(){
+                 $(".home-menu").show();
+            });
+            $(".home").mouseleave(function(){    
+                $(".home-menu").hide();
+            });
+        });
+        
+           $(document).ready(function(){
+             $(".user").hover(function(){
+                 $(".user-menu").show();   
+            });
+            $(".user").mouseleave(function(){    
+                $(".user-menu").hide();
+           }); 
+        });
+        </script>
+        <style>
+             #divhome { margin-top:40px;margin-left:60px;}
+             .searchbox {width:400px !important ;height:22px !important ; border-radius:0px !important;}
+             .container-fluid {margin-left:40px;}  
+             .search-button { background-color:#FEFEFE;margin-top:-10px;}
+             .navbar-inner {background-color:#E0E0E0;background-image:none;color:#333333;font-weight:bold;font-family:"Helvetica Neue",Arial,sans-serif;}
+        </style>
+            
+        {% block head %} {% endblock %}
+   
+    
+     
+    </head>
+     
+    <body>
+    <div id="fb-root"></div>
+
+    <script>
+    
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/fr_FR/all.js#xfbml=1&status=0";
+        fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+        
+    </script>
+        
+     
+    <div class="navbar navbar-fixed-top">  
+      <div class="navbar-inner">  
+        <div class="container-fluid">  
+        
+            <ul class="tq-icon nav pull-left ">  
+                
+               
+                <li><a href="{% url 'quora.views.scroll_home' %}"> <img src="/media/fav.png" height="0" width="28"></a><li> 
+            </ul>
+            
+         
+           <form class="navbar-search pull-left " id="searchform" method="POST" action="/quora/search-results/">
+             
+                <input class="searchbox search-input" id="search" type="text" name="tags" placeholder="Search" onkeyup="getData(this,this.value);"/>
+                <input class= "search-button"type="submit" value="Search"/>
+           </form>  
+
+       
+        <ul class="nav pull-right">  
+
+          <li class="dropdown">  
+            <a href="#"  class="dropdown-toggle disabled write" data-toggle="dropdown"> Write </a>  
+                <ul class="dropdown-menu write-menu write">  
+                    <li><a href="{% url 'quora.views.saving_question' %}">Add question</a></li>  
+                    <li><a href="/quora/unanswered-questions">Answer Question</a></li>  
+                    <li><a href="{% url 'quora.views.create_topic' %}">Create Topic</a></li> 
+                </ul>  
+            </li>  
+        
+
+
+            <li class="dropdown">  
+            <a href="{% url 'quora.views.scroll_home' %}"  class="dropdown-toggle disabled home"  data-toggle="dropdown"> Home </a>  
+                <ul class="dropdown-menu home-menu home">  
+                    <li><a href="#">Notifications</a></li>  
+                    <li><a href="#">Inbox</a></li>  
+                </ul>  
+            </li>  
+            
+            
+            
+            <li class="dropdown">  
+            <a href="/quora/user_detail/{{user.id}}/"  class="dropdown-toggle disabled user"  data-toggle="dropdown"> {{ request.user.first_name }}
+               
+              {% if profile.profile_pic == '' %}
+              <img  src="/media/profile_imgs/man.png/" height="18" width="18"/>
+              {% else %}
+               <img  src="/media/{{ profile.profile_pic }}" height="18" width="18"/>
+                {% endif %} 
+
+            </a>  
+                <ul class="dropdown-menu user-menu user">  
+                    <li><a href="#">Credits</a></li>  
+                    <li><a href="{% url 'quora.views.user_settings' %}">Settings</a></li>  
+                    <li><a href="#">Help</a></li>  
+                    <li><a href="#">About and Jobs</a></li>  
+                    <li><a href="#">Privacy and Terms</a></li>  
+                    <li><a href="{% url 'quora.views.logout_view' %}">Logout</a></li>  
+                </ul>  
+            </li>  
+
+         </div>  
+      </div>  
+    </div>   
+ 
+       <div id="divhome">
+                   
+            {% block content %}{% endblock %}
+            
+         </div> 
+       
+      </body>
+</html>

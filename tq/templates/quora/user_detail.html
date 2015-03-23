@@ -1,0 +1,501 @@
+{% extends "base.html" %}
+
+{% block head %}
+{% block title %}{{user_pro.user_name}}{% endblock %}
+ <script src="/media/all_ajax_fun.js"></script>
+ 
+ <link rel="stylesheet" href="/media/complete.css" />
+<style>
+p{margin-bottom:0px;}
+hr {margin:6px 6px 6px 6px;} 
+.container{ margin-left:70px;}
+.side {margin-left:190px;font-size:90%; border:2px solid #D8D8D8;padding:10px 10px;margin-top:10px; } 
+.text { font-size:80%; color:#666666;}
+.first-last-span{font-size:20px;}
+.input-text-for-name{font-size:20px;width:331px;height:72px;}
+.edit-desc{width:425px;height:36px;}
+.question-div {margin-top:10px;}
+.answer-div{ margin-top:10px;}
+.input-text-for-name{width:324px;height:36px;}
+#container {
+    position:relative;
+    display:inline-block;
+    height:120px;
+    width: 100px;
+   }
+
+#child
+{
+    position: absolute;
+    height: 100px;
+    background-color: rgba(0,0,0,0.5);
+    left:0; top:0;
+    color:white;padding:10px;
+    display:none;
+}
+#container:hover #child{display:block;color:white;}
+}
+
+#profile-image{
+  height:120px;
+  width: 100px;
+}
+.add-photo-link
+{   
+    margin-top:90px;
+    color:white;
+}
+
+
+#blanket {
+	background-color:#F7F8E0;
+	opacity: 0.65;
+	background:none;
+	position:absolute;
+	z-index: 9001;
+	top:0px;
+	left:0px;
+	width:100%;
+	}
+	 
+	#profile-pic {
+  background-color:#EAEAEA;
+	position:absolute;
+	width:300px;
+	height:60px;
+	border:1px solid #AAAAAA;
+  border-radius:5px 5px 5px 5px;
+  z-index: 9002;
+  padding:20px 20px;
+	}
+.submit-button {border:0px;background-color:#19558D;color:white;
+                border-radius: 3px 3px 3px 3px;
+                border-style: solid;
+                border-width: 1px;
+                padding: 3px 10px;
+                text-align: center;
+                text-shadow: 0 1px #F0F0F0
+                font-family:"Helvetica Neue",Arial,sans-serif;
+              }
+.bio{
+font-weight: bold;
+margin-top: 15px;
+    }
+
+.div1, .div2, .div3
+{
+display:inline-block;
+margin:2px;
+}
+
+.input-text-for-name
+{
+width:300px !important; 
+height: 20px !important; 
+border: 1px solid blue;
+font-size:20px !important;
+border-radius: 0px !important;
+font-weight:bold;
+font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.edit-desc
+{
+font-size:16px !important;
+width:350px !important; 
+font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+height: 20px !important; 
+border: 1px solid blue !important;
+
+border-radius: 0px !important;
+}
+.user_profile_desc
+{
+font-size:16px !important;
+
+font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.error_in_name
+{
+font-size:16px !important;
+
+font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+color: red;
+
+}
+
+
+</style>
+<script type="text/Javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script> 
+<script type="text/javascript">
+$(document).ready(function(){
+$('.input-text-for-name').css('border',"1px solid blue");
+$(".edit-desc").hide();
+$(".full-data").hide();
+$(".more_info").hide();
+$(".more_info2").hide();
+$(".description_label2").hide();
+$(".user_desc_div2").hide();
+
+$(".input_for_adding_full_detail").hide();
+$(".add_desc").hide();
+$(".cancel_button").hide();
+$(".label_for_desc").hide();
+$(".edit_name").hide();
+$(".input-text-for-name").hide();
+
+$("#close-button").click(function(e){
+      $('.input-text-for-name').css('border',"1px solid blue");
+      $("#blanket").hide();
+          });
+
+$(".user_desc_button").click(function(e){
+        $('.error_in_name').hide();
+        $(".description_label").hide();
+        $(".description_label2").hide();
+        $(".user_desc_div").hide();
+        $(".user_desc_div2").hide();
+        $('.more_info').show();
+          });
+
+$(".user_desc_button2").click(function(e){
+        $('.error_in_name').hide();
+        $(".description_label").hide();
+        $(".description_label2").hide();
+        $(".user_desc_div").hide();
+        $(".user_desc_div2").hide();
+        $('.more_info2').show();
+          });
+
+
+$(".cancel_user_desc").click(function(e){
+      $('.input-text-for-name').css('border',"1px solid blue");
+      $(".more_info").hide();
+      $('.error_in_name').hide();
+        console.log($(".detail_user").html());
+        if ($(".detail_user").html() == "")
+        {
+            $(".user_desc_div").hide();
+            console.log("in");
+        }
+        else
+        {
+            console.log("out");
+            $(".user_desc_div").show();
+        }
+
+    
+        $(".description_label").show();
+        
+
+          });
+
+
+
+
+$(".cancel_user_desc2").click(function(e){
+      $('.input-text-for-name').css('border',"1px solid blue");
+      $('.error_in_name').hide();
+      $(".more_info2").hide();
+      $(".user_desc_div2").show();
+  });
+
+
+
+
+$("#cancel_button").click(function(e){
+    $('.input-text-for-name').css('border',"1px solid blue");
+    $('.error_in_name').hide();
+    $(".edit-desc").hide();
+    $(".add_desc").hide();
+    $(".cancel_button").hide();
+    $(".label_for_desc").hide();
+    $(".edit_name").hide();
+    $(".input-text-for-name").hide();
+$('.user_profile_desc').show();
+$(".edit_name_desc").show();
+$(".first-last-span").show();
+}); 
+});
+
+
+
+
+
+$(document).ready(function(){
+   $('.error_in_name').hide();
+   $("#profile-pic").hide();
+   $("#child").click(function(e){
+       $('#profile-pic').show();
+     });
+  });
+
+$(document).ready(function(){
+  $("#container").hover(
+      function () {
+        $("#child").show();
+      },
+      function () {
+        $("#child").hide();
+      });
+      });
+
+$(document).ready(function(){
+  $("#child").hide();
+ $("#child").hover(
+           function(){
+           $("#child").show();
+    },
+       function(){
+       $("#child").hide();
+   });
+   });
+
+function add_user_desc_fun()
+{
+
+    $(document).ready(function(){
+    $(".edit_name").show();
+    $(".input-text-for-name").val($('.first-last-span').html());
+    $(".edit_name_desc").hide();
+    $(".edit-desc").toggle();
+    $(".add_desc").toggle();
+    $(".cancel_button").toggle();
+    $(".label_for_desc").toggle();
+    
+    $(".edit-desc").val($('.user_profile_desc').html());
+$('.user_profile_desc').hide();
+    
+    
+});
+}
+function submit_desc(obj,u_id)
+{
+var str =$(".input-text-for-name").val();
+var ret = str.split(" ");
+var first_name_user = ret[0];
+var last_name_user= str.substring(first_name_user.length, str.length)
+if(last_name_user =="")
+{
+  $('.input-text-for-name').css('border',"1px solid red");
+  $('.error_in_name').show();
+}
+else
+{
+$.ajax({
+                type: "POST",
+                url: "/quora/adding_user_desc/"+u_id+"/",
+                data: {'desc': $(obj).prev().val() , 'first_name_user': first_name_user,'last_name_user':last_name_user},
+                //datatype:"jsonp",
+                success: function(response) {
+$('.error_in_name').hide();
+$('.input-text-for-name').css('border',"1px solid blue");
+$(".first-last-span").html(response.user_name);
+
+$(".user_profile_desc").html(response.user_desc);
+$(".first-last-span").show();
+$(".user_profile_desc").show();
+$(".edit_name_desc").show();
+
+$(".input-text-for-name").hide();
+$(".edit-desc").hide();
+$(".add_desc").hide();
+$("#cancel_button").hide();
+ $(".edit_name").hide();
+    
+            },
+        error: function(rs, e) 
+                {
+                    alert(rs.responseText);
+                    
+                }
+          });
+}
+}
+function edit_name_fun()
+{
+    $(document).ready(function(){
+    $(".input-text-for-name").show();
+    $(".input-text-for-name").val($('.first-last-span').html());
+    $('.first-last-span').hide();
+    $(".edit_name").hide();
+
+});
+}
+
+function updating_user_full_detail(obj,u_id)
+{
+
+$.ajax({
+                type: "POST",
+                url: "/quora/adding_user_full_detail/"+u_id+"/",
+                data: {'full_desc': $(obj).parent().prev().val() },
+              
+                success: function(response) {
+                                    if(response.user_detailed == "")
+                                    {
+                                        $(".more_info").hide();
+                                        $(".more_info2").hide();
+                                        $(".detail_user").html("");
+                                        $(".description_label2").show(); 
+                                        $(".user_desc_div").hide();
+                                    }
+                                    else
+                                    {
+                                        $(".more_info").hide();
+                                        $(".more_info2").hide();
+                                        $(".description_label").hide();
+                                      
+                                        $(".description_label2").hide();
+                                        $(".user_desc_div").hide();
+                                        $(".detail_user").html(response.user_detailed);
+                                        $(".user_desc_div2").show();
+                                    }
+            },
+        error: function(rs, e) 
+                {
+                    alert(rs.responseText);
+                    
+                }
+          });
+
+
+}
+</script>
+
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid container">
+    <div class="row-fluid">
+            <span><br><br>
+                <div><strong><span class="first-last-span div1">{{user_complete_name}}</span></strong>
+                 {% ifequal user request.user%}
+                    <button onclick="edit_name_fun();" class="edit_name submit-button">Edit</button>
+                {% endifequal %}
+                </div>
+                <div><input class="input-text-for-name"  type="text" /></div>
+                <div class="error_in_name">Please use your full name.</div>
+                <span class="user_profile_desc">{{user_pro.user_desc}}</span>
+        {% ifequal user request.user%}
+                <button onclick="add_user_desc_fun();" class="edit_name_desc submit-button div2">Edit</button>
+                
+        {% endifequal %}
+            </span>
+        <div class="label_for_desc">Short Bio (ex: Librarian, Film Critic, Web Designer...)</div>
+        <input class="edit-desc"  type="text" style="width: 400px; height: 25px; border: 1px solid blue"/>
+        <button class="add_desc submit-button" onclick="submit_desc(this,{{user.id}});">Update</button>
+        <button id = "cancel_button" class="submit-link cancel_button submit-button" >Close</button>
+<br><br>
+        <div class="span2">
+            <div id="container">
+       
+                {% if profile.profile_pic == '' %}
+                    <img id="profile-image"  style="width:120px;height:100px" src="/media/profile_imgs/man.png/"/>
+                {% else %}
+                    <img id="profile-image"  style="width:120px;height:100px" src="/media/{{ profile.profile_pic }}"/>
+                {% endif %}
+        
+                {% ifequal user request.user%}
+                   <div id="child"><h6 class="add-photo-link"><a href ="javascript:void(0);" class="add-photo-link">Change photo</a></h6></div>
+                {% endifequal %}
+            </div>  
+            <div id="profile-pic">
+                <form action = "/quora/user_detail/{{user.id}}/" method="POST" enctype="multipart/form-data">
+
+                        <center>{{ form.profile_pic }}
+   
+                        <input type="submit" value="display">
+                </form>
+                <button id = "close-button" >Close</button>
+            </div>  
+            <p class="bio"><a href="" class="bio">About</a></p>
+            <p class="bio"><a href="" class="bio">Follower</a></p>
+            <p class="bio"><a href="" class="bio">Following</a></p>
+            <p class="bio"><a href="" class="bio">Questions :</a>{{question_count}}</p>
+            <p class="bio"><a href="" class="bio">Answers :</a>{{answer_count}}</p>
+        </div>
+<br>
+{% if user_pro.user_full_detail == "" %}
+    <div class="description_label">
+        Write a <button class="submit-link user_desc_button">description</button>about urself.
+    </div>
+{% else %}
+    <div class="user_desc_div">
+        <div class="user_full_desc_div">
+            <div class="detail_user div1">{{ user_pro.user_full_detail }}</div>
+            <div class="div2">
+                 {% if user_pro.user == request.user %}
+                <button class="submit-button user_desc_button2">Edit</button>
+                  {% endif %} 
+           </div>
+        </div>
+    </div>
+   
+{% endif %}
+<div class="description_label2">
+        Write a <button class="submit-link user_desc_button">description</button>about urself.
+</div>
+
+    <div class="user_desc_div2">
+        <div class="user_full_desc_div">
+            <div class="detail_user div1">{{ user_pro.user_full_detail }}</div>
+            <div class="div2">
+                {% if user_pro.user == request.user %}
+                <button class="submit-button user_desc_button2">Edit</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+<div class="more_info2">
+    <input type="text" class="input_for_adding_desc2" style="width: 490px; height: 25px; border: 1px solid blue;border-radius:0px;" value = "{{ user_pro.user_full_detail }}" />
+    <div class="inside_more_info2">
+        <button class="submit-link cancel_user_desc2">Cancel</button>
+        <button class="submit-button" onClick="updating_user_full_detail(this,{{user.id}});">Update</button>
+    </div>
+</div>
+
+
+<div class="more_info">
+    <input type="text" class="input_for_adding_desc" style="width: 490px; height: 35px; border: 1px solid blue;border-radius:0px;" value = "{{ user_pro.user_full_detail }}" />
+    <div class="inside_more_info">
+        <button class="submit-link cancel_user_desc">Cancel</button>
+        <button class="submit-button" onClick="updating_user_full_detail(this,{{user.id}});">Update</button>
+    </div>
+</div>
+          <div class="side span8">
+              <h5>Questions Added:</h5>
+              <div class="question-div">
+                    {% for question in questions %}<hr>
+                    <a href = "/quora/question/{{ question.tags|slugify }}/{{ question.title|slugify }}/">
+                      <span class="new">{{ question.tags }} : {{ question.title }}</span></a>
+                    {% endfor %}
+              </div><hr>      
+              <div class="answer-div">
+                    <h5>Answers Added:</h5><hr>       
+                    {% for answer in list_answer reversed %}
+                    
+                    <a href = "/quora/question/{{ answer.1|slugify }}/{{ answer.0|slugify }}/">
+                    <p class="new">{{ answer.1}} : {{ answer.0 }}</p></a>
+                    <div class ="half-data">{% autoescape off %}   {{answer.2}} {% endautoescape %}</div>
+                    <button class="more submit-link" onClick="javascript:more_data($(this))">(more)</button>  
+                    <div class = "full-data"> {% autoescape off %}{{answer.3 }}{% endautoescape %}</div>
+<hr>
+                     {% endfor %}
+              </div>
+         
+          </div>
+          <div id="blanket" style="display:none"></div>
+          <div id="profile-pic" style="display:none">
+
+              <a onclick="popup('profile-pic')" ></a>
+          </div>
+          <a onclick="popup('profile-pic')"></a>
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}

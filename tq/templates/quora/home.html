@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block head %}
+ <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
+ <script src="/media/all_ajax_fun.js"></script>
+ <script src="/media/js/chat.js"></script>
+ <script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+ <link rel="stylesheet" href="/media/complete.css"/>
+ 
+    {% load socketio_tags %}
+    <script src="/media/js/socket.io.js"></script>
+    <script>
+    var itemFormat = function(value){
+        step = ""
+        str = ""
+        console.log(value);
+        time_string = "<a href=''><abbr class='timeago' title='"+ value.date +"'data-ts='"+value.date+"'>"+ $.timeago(value.date) + "</abbr></a>"
+                                                if(value.type == "question"){
+                                                  follow = "<p><span class='follow'><a href=''>follow</a></span>"
+                                                  middle_step = "<span class='answer'><a href ='/quora/question/"+ value.slug_tags+"/"+ value.slug_title +"'> " + value.count +" " + "Answer</a></span>"
+                                                  like_count = ""
+                                                  description = "" 
+                                                  }
+                                                  
+                                                else{
+                                                  follow = "<p><button class='submit-link answer-comment'><span>"+value.comm_count+"+</span></button>Comment(s)"
+                                                  like_count ="<span class='usernames dropdown'><div class='div1'><span title='Answer Votes' class='like-count'>"+value.like_numbers+"</span></div><div class='menu div2' ><input type='hidden' name='"+value.user_id+"' value='"+value.user_id+"'><a class='usernames on_hover' href='/quora/user_detail/"+value.user_id+"/'>"+value.userprofile_desc+"</a></div>";
+
+                                                  
+                                                  
+                                                  if(value.userprofile_description != "")
+                                                  {
+                                                  description = "<div class='div3'>  "+" "+value.userprofile_description+"</div></span>"
+                                                  }
+                                                  else{
+                                                  description = "<div class='div3'></div></span>"
+                                                  }
+                                                  console.log(value.liked);
+                                                  if(value.liked == true)
+                                                      {
+                                                      console.log("if");
+                                                       middle_step = "<button class='like submit-link' onclick='home_like_method(this,"+value.ans_id+");' id = 'id-home-"+value.ans_id+"' style='display:none;'>Like</button><button class='unlike submit-link' onclick='home_unlike_method(this,"+value.ans_id+");' id = 'id-home-unlike-"+value.ans_id+"'>UnLike</button>"
+                                                        }
+                                                    else{
+                                                      middle_step = "<button class='like submit-link' onclick='home_like_method(this,"+value.ans_id+");' id = 'id-home-"+value.ans_id+"' >Like</button><button class='unlike submit-link' onclick='home_unlike_method(this,"+value.ans_id+");' id = 'id-home-unlike-"+value.ans_id+"' style='display:none;'>UnLike</button>"
+                                                    }
+                                                  
+                                                  
+                                                  }
+                                                if(value.image != "None"){
+                                    image_string = "<img class='question-picture' src='/media/"+value.image+"'>"
+                                                  }
+                                                else{
+                                   image_string = "<img class='question-picture' src='/media/topic_pics/blank.jpg'>"
+                                                  } 
+                                                if(value.person == value.user_id){
+                                                  if(value.type == "question" ){
+                                            step = "<a class='delete submit-link' id="+value.id+" href='#' onclick='home_page_post_delete(this);' url='/quora/delete-question/"+value.id+"/'>Delete</a></p>";
+                                                    }
+                                                  else{
+                                            step = "<a class='delete submit-link' id="+value.id+" href='#' onclick='home_page_post_delete(this);' url='/quora/answer-delete/"+value.id+"/'>Delete</a></p>";
+                                                    }
+                                                  }   
+
+                                                  
+                                                                                              
+                                                
+                                                if(value.type == "answer"){
+                                                    if (value.answer.length < 200){
+                                                        console.log("hate");
+
+                                                        console.log(value.answer.length);
+                                                        style_string = "style='display:none;'";
+                                                        ellipsis_style = ""
+                                                        }
+                                                    else {
+                                                        style_string = "";
+                                                        ellipsis_style ="style='overflow:hidden;text-overflow:ellipsis;white-space:nowrap;'"
+                                                        }
+                                                    if(value.vote == 0){
+                                                    answer = value.answer
+                                                    }
+                                                    else{
+                                                    answer = value.small_img
+                                                    }
+                                                     answer_string = "<div class='half-data' "+ellipsis_style+">"+answer+"</div><button class='more submit-link' "+style_string+" onClick='javascript:more_data($(this))'>(more)</button><div style='display:none;' class ='full-data'>"+value.answer+"</div>";
+                                                    }
+                                                else{
+                                                    if (value.description.length < 200){
+                                                        style_string = "style='display:none;'";
+                                                        ellipsis_style = ""
+                                                        }
+                                                    else {
+                                                        style_string = "";
+                                                        ellipsis_style ="style='overflow:hidden;text-overflow:ellipsis;white-space:nowrap;'"
+                                                        }
+                                                    answer_string = "<div class='half-data' "+ellipsis_style+">" +value.description +"</div><button class='more submit-link' "+style_string+" onClick='javascript:more_data($(this))'>(more)</button><div style='display:none;' class ='full-data'>"+value.description+"</div>";
+                                                    }   
+                                                
+                                                str = str+"<div class='hi'><div class='profile-pic span1'>"+ image_string +"</div><div class ='post span11'><p class ='post-detail'>"+ value.state +" Added to Topic<a href=''><span class='post-detail'>"+" "+ value.tags + "</span></a>"+" "+time_string+"</p><p><a href ='/quora/question/"+ value.slug_tags+"/"+ value.slug_title +"/'><span class='questions-style'>"+ value.tags+":"+ value.title + "</span></a></p>"+like_count+description+answer_string+follow+middle_step+step+"</p><hr></div></div>";
+                                            
+                                              $("#postswrapper").prepend(str);
+                                              console.log(value.image);
+                                                jQuery("abbr.timeago").timeago();
+                                                
+            };
+
+    var addItem = function(item) {
+        console.log("additem");
+                    
+        $.each(item, function(i,variable){
+                itemFormat(variable);
+                console.log(variable.image);
+            });
+        };
+    </script>        
+ 
+<style type="text/css">
+
+.menu li a
+{
+    font-size: 14px;
+}
+
+.div1, .div2, .div3
+{
+display:inline-block;
+margin:2px;
+}
+
+.div11, .div22
+{
+display:inline-block;
+}
+
+.user_full_desc
+{
+    font-size:12px;
+}
+.sub
+{
+
+    background: #fff;
+    position: absolute;
+    z-index: 1;
+    width: 250px;
+    
+    padding: 5px 0 1px;
+    border-radius: 2px;
+    box-shadow: 0 2px 4px #ddd;
+    border: 1px solid #ddd;
+    display: none;
+}
+
+</style>
+
+
+
+
+
+
+{% block title %}Home - Tarams Quora{% endblock %}
+
+{% endblock %}
+{% block content %}
+
+
+
+<script>
+
+
+
+    
+        
+        $(document).ready(function(){
+         $(this).next().hide();
+             $(".user_names").hover(function(){
+                 $(this).next().show();   
+            });
+            $(".user_names").mouseleave(function(){    
+                $(this).next().hide();
+           }); 
+        
+        });
+
+(function (factory) {
+    if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        //console.log("factory true");
+        define(['jquery'], factory);
+    } else {
+        // Browser globals
+        //console.log("factory false")
+        factory(jQuery);
+    }
+}
+
+(function ($) {
+    $.timeago = function(timestamp) {
+        if (timestamp instanceof Date) {
+            return inWords(timestamp);
+        } else if (typeof timestamp === "string") {
+            return inWords($.timeago.parse(timestamp));
+        } else if (typeof timestamp === "number") {
+            return inWords(new Date(timestamp));
+        } else {
+            return inWords($.timeago.datetime(timestamp));
+        }
+    };
+    
+    var $t = $.timeago;
+
+    $.extend($.timeago, {
+        settings: {
+            refreshMillis: 60000,
+            allowFuture: false,
+            localeTitle: false,
+            cutoff: 0,
+            strings: {
+                prefixAgo: null,
+                prefixFromNow: null,
+                suffixAgo: "ago",
+                suffixFromNow: "from now",
+                seconds: "less than a minute",
+                minute: "about a minute",
+                minutes: "%d minutes",
+                hour: "about an hour",
+                hours: "about %d hours",
+                day: "a day",
+                days: "%d days",
+                month: "about a month",
+                months: "%d months",
+                year: "about a year",
+                years: "%d years",
+                wordSeparator: " ",
+                numbers: []
+            }
+        },
+    
+        inWords: function(distanceMillis) {
+            var $l = this.settings.strings;
+            var prefix = $l.prefixAgo;
+            var suffix = $l.suffixAgo;
+            if (this.settings.allowFuture) {
+                if (distanceMillis < 0) {
+                    prefix = $l.prefixFromNow;
+                    suffix = $l.suffixFromNow;
+                }
+            }
+            var seconds = Math.abs(distanceMillis) / 1000;
+            var minutes = seconds / 60;
+            var hours = minutes / 60;
+            var days = hours / 24;
+            var years = days / 365;
+
+            function substitute(stringOrFunction, number) {
+                var string = $.isFunction(stringOrFunction) ? stringOrFunction(number, distanceMillis) : stringOrFunction;
+                var value = ($l.numbers && $l.numbers[number]) || number;
+                return string.replace(/%d/i, value);
+            }
+
+            var words = seconds < 45 && substitute($l.seconds, Math.round(seconds)) ||
+                seconds < 90 && substitute($l.minute, 1) ||
+                minutes < 45 && substitute($l.minutes, Math.round(minutes)) ||
+                minutes < 90 && substitute($l.hour, 1) ||
+                hours < 24 && substitute($l.hours, Math.round(hours)) ||
+                hours < 42 && substitute($l.day, 1) ||
+                days < 30 && substitute($l.days, Math.round(days)) ||
+                days < 45 && substitute($l.month, 1) ||
+                days < 365 && substitute($l.months, Math.round(days / 30)) ||
+                years < 1.5 && substitute($l.year, 1) ||
+                substitute($l.years, Math.round(years));
+            var separator = $l.wordSeparator || "";
+            
+            if ($l.wordSeparator === undefined) { separator = " "; }
+            return $.trim([prefix, words, suffix].join(separator));
+        },
+    
+        parse: function(iso8601) {
+            var s = $.trim(iso8601);
+            s = s.replace(/\.\d+/,""); // remove milliseconds
+            s = s.replace(/-/,"/").replace(/-/,"/");
+            s = s.replace(/T/," ").replace(/Z/," UTC");
+            s = s.replace(/([\+\-]\d\d)\:?(\d\d)/," $1$2"); // -04:00 -> -0400
+            return new Date(s);
+        },
+        
+        datetime: function(elem) {
+            var iso8601 = $t.isTime(elem) ? $(elem).attr("datetime") : $(elem).attr("title");
+            return $t.parse(iso8601);
+        },
+        
+        isTime: function(elem) {
+            // jQuery's `is()` doesn't play well with HTML5 in IE
+            return $(elem).get(0).tagName.toLowerCase() === "time"; // $(elem).is("time");
+        }
+    });
+
+    // functions that can be called via $(el).timeago('action')
+    // init is default when no action is given
+    // functions are called with context of a single element
+    var functions = {
+        init: function(){
+            var refresh_el = $.proxy(refresh, this);
+            refresh_el();
+            var $s = $t.settings;
+            if ($s.refreshMillis > 0) {
+                setInterval(refresh_el, $s.refreshMillis);
+            }
+        },
+        
+        update: function(time){
+            $(this).data('timeago', { datetime: $t.parse(time) });
+            refresh.apply(this);
+        }
+    };
+
+    $.fn.timeago = function(action, options) {
+        var fn = action ? functions[action] : functions.init;
+        if(!fn){
+            throw new Error("Unknown function name '"+ action +"' for timeago");
+        }
+        // each over objects here and call the requested function
+        this.each(function(){
+            
+            fn.call(this, options);
+        });
+        return this;
+    };
+    
+    function refresh() {
+        var data = prepareData(this);
+        var $s = $t.settings;
+
+        if (!isNaN(data.datetime)) {
+            if ( $s.cutoff == 0 || distance(data.datetime) < $s.cutoff) {
+                $(this).text(inWords(data.datetime));
+            }
+        }
+        return this;
+    }
+
+    function prepareData(element) {
+        element = $(element);
+        if (!element.data("timeago")) {
+            element.data("timeago", { datetime: $t.datetime(element) });
+            var text = $.trim(element.text());
+            if ($t.settings.localeTitle) {
+                element.attr("title", element.data('timeago').datetime.toLocaleString());
+            }
+            else if (text.length > 0 && !($t.isTime(element) && element.attr("title"))) {
+                element.attr("title", text);
+            }
+        }
+        return element.data("timeago");
+    }
+
+    function inWords(date) {
+        return $t.inWords(distance(date));
+    }
+
+    function distance(date) {
+        return (new Date().getTime() - date.getTime());
+    }
+
+    // fix for IE6 suckage
+    document.createElement("abbr");
+    document.createElement("time");
+
+
+}));
+jQuery.timeago.settings.allowFuture = true;
+jQuery(document).ready(function() {
+  jQuery("abbr.timeago").timeago();
+});
+</script> 
+ 
+
+
+
+                          <script type="text/javascript">
+                                 $(document).ready(function(){
+                                    var c= 2;
+                              
+                                    $(window).scroll(function(){
+                                       if($(window).scrollTop() + $(window).height() == $(document).height())
+                                       {
+                                       console.log("hell");   
+                                       $('#loadingindicator').show();
+                                       $.ajax({
+                                            type: "GET",
+                                            url : "/quora/home/",
+                                            data : "page="+c,
+                                            datatype: "json",
+                                            async:false,
+                                            success: function(data) {
+                                            console.log("hii");
+                                            console.log(c);
+                                            $('#loadingindicator').hide();
+                                            if (c <= {{question.paginator.num_pages}}) {
+                                              console.log("success");
+                                              str= "";
+                                              step= "";
+                                              c=c+1;
+                                              $.each(data.event_list, function(index, value){
+time_string = "<a href=''><abbr class='timeago' title='"+ value.date +"'data-ts='"+value.date+"'>"+ $.timeago(value.date) + "</abbr></a>"
+                                                if(value.type == "question"){
+                                                  follow = "<p><span class='follow'><a href=''>follow</a></span>"
+                                                  middle_step = "<span class='answer'><a href ='/quora/question/"+ value.slug_tags+"/"+ value.slug_title +"'> " + value.count +" " + "Answer</a></span>"
+                                                  like_count = ""
+                                                  description = "" 
+                                                  }
+                                                  
+                                                else{
+                                                  follow = "<p><button class='submit-link answer-comment'><span>"+value.comm_count+"+</span></button>Comment(s)"
+                                                  like_count ="<span class='usernames dropdown'><div class='div1'><span title='Answer Votes' class='like-count'>"+value.like_numbers+"</span></div><div class='menu div2' ><input type='hidden' name='"+value.user_id+"' value='"+value.user_id+"'><a class='usernames on_hover' href='/quora/user_detail/"+value.user_id+"/'>"+value.userprofile_desc+"</a></div>";
+
+                                                  
+                                                  
+                                                  if(value.userprofile_description != "")
+                                                  {
+                                                  description = "<div class='div3'>  "+" "+value.userprofile_description+"</div></span>"
+                                                  }
+                                                  else{
+                                                  description = "<div class='div3'></div></span>"
+                                                  }
+                                                  console.log(value.liked);
+                                                  if(value.liked == true)
+                                                      {
+                                                      console.log("if");
+                                                       middle_step = "<button class='like submit-link' onclick='home_like_method(this,"+value.ans_id+");' id = 'id-home-"+value.ans_id+"' style='display:none;'>Like</button><button class='unlike submit-link' onclick='home_unlike_method(this,"+value.ans_id+");' id = 'id-home-unlike-"+value.ans_id+"'>UnLike</button>"
+                                                        }
+                                                    else{
+                                                      console.log("else");
+                                                      middle_step = "<button class='like submit-link' onclick='home_like_method(this,"+value.ans_id+");' id = 'id-home-"+value.ans_id+"' >Like</button><button class='unlike submit-link' onclick='home_unlike_method(this,"+value.ans_id+");' id = 'id-home-unlike-"+value.ans_id+"' style='display:none;'>UnLike</button>"
+                                                    }
+                                                  
+                                                  
+                                                  }
+                                                if(value.image != "None"){
+                                    image_string = "<img class='question-picture' src='/media/"+value.image+"'>"
+                                                  }
+                                                else{
+                                   image_string = "<img class='question-picture' src='/media/topic_pics/blank.jpg'>"
+                                                  } 
+                                                if(value.person == value.user_id){
+                                                  if(value.type == "question" ){
+                                            step = "<a class='delete submit-link' id="+value.id+" href='javascript:void(0);' onclick='home_page_post_delete(this);' url='/quora/delete-question/"+value.id+"/'>Delete</a></p>";
+                                                    }
+                                                  else{
+                                            step = "<a class='delete submit-link' id="+value.id+" href='javascript:void(0);' onclick='home_page_post_delete(this);' url='/quora/answer-delete/"+value.id+"/'>Delete</a></p>";
+                                                    }
+                                                  }   
+
+                                                  
+                                                                                              
+                                                
+                                                if(value.type == "answer"){
+                                                    if (value.answer.length < 200){
+                                                         console.log("hate");
+
+                                                        console.log(value.answer.length);
+                                                        style_string = "style='display:none;'";
+                                                        ellipsis_style = ""
+                                                        }
+                                                    else {
+                                                        style_string = "";
+                                                        ellipsis_style ="style='overflow:hidden;text-overflow:ellipsis;white-space:nowrap;'"
+                                                        }
+                                                    if(value.vote == 0){
+                                                    answer = value.answer
+                                                    }
+                                                    else{
+                                                    answer = value.small_img
+                                                    }
+                                                     answer_string = "<div class='half-data' "+ellipsis_style+">"+answer+"</div><button class='more submit-link' "+style_string+" onClick='javascript:more_data($(this))'>(more)</button><div style='display:none;' class ='full-data'>"+value.answer+"</div>";
+                                                    }
+                                                else{
+                                                    if (value.description.length < 200){
+                                                        style_string = "style='display:none;'";
+                                                        ellipsis_style = ""
+                                                        }
+                                                    else {
+                                                        style_string = "";
+                                                        ellipsis_style ="style='overflow:hidden;text-overflow:ellipsis;white-space:nowrap;'"
+                                                        }
+                                                    answer_string = "<div class='half-data' "+ellipsis_style+">" +value.description +"</div><button class='more submit-link' "+style_string+" onClick='javascript:more_data($(this))'>(more)</button><div style='display:none;' class ='full-data'>"+value.description+"</div>";
+                                                    }   
+                                                
+                                                str = str+"<div class='hi'><div class='profile-pic span1'>"+ image_string +"</div><div class ='post span11'><p class ='post-detail'>"+ value.state +" Added to Topic<a href=''><span class='post-detail'>"+" "+ value.tags + "</span></a>"+" "+time_string+"</p><p><a href ='/quora/question/"+ value.slug_tags+"/"+ value.slug_title +"/'><span class='questions-style'>"+ value.tags+":"+ value.title + "</span></a></p>"+like_count+description+answer_string+follow+middle_step+step+"</p><hr></div></div>";
+                                            });
+                                              $("#postswrapper").append(str);
+                                              jQuery("abbr.timeago").timeago();
+                                                
+                                        }
+                                    }
+                                });
+    
+                               }
+                              }); 
+                               }); 
+                          </script>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span7 ">
+                 <div id="postswrapper">
+                  
+                          {% for item in question %}
+                                
+                              {% ifequal item.liked True %}
+                                         <script type="text/Javascript">
+                                                $(document).ready(function(){
+                                                $("#id-home-unlike-{{item.ans_id}}").show();
+                                                $("#id-home-unlike-{{item.ans_id}}").prev().hide();
+                
+                                             });
+                                         </script>        
+                              {% endifequal %}
+                                 
+                               
+                    <div class="hi">  
+                       <div class="profile-pic span1">
+                              {% ifequal item.image "None" %}
+                                 <img class="question-picture" src="/media/topic_pics/blank.jpg">
+                                   
+                              {% else %}
+                                <img class="question-picture" src="/media/{{ item.image }}">
+                              {% endifequal %}
+                       </div>
+                       <div class ="post span11">  
+                            <p class ='post-detail'>{{ item.state }} added to topic
+                               <a href=""><span class='post-detail'> {{ item.tags }} </span ></a>
+                               <a href=""><abbr class="timeago" title="{{ item.date }}" data-ts="{{ item.date }}">{{ item.date }}</abbr></a>
+                            </p>
+                            <p>
+                               <a href = "/quora/question/{{ item.tags|slugify }}/{{ item.title|slugify }}/" target="_blank">
+                                   <span class="questions-style">{{ item.tags }} : {% autoescape off %}{{ item.title }}{% endautoescape %}</span>
+                               </a>
+                            </p>
+                            {% ifequal item.state  "Question" %}
+                               
+                                    <div class ="half-data">{{ item.description }}</div> 
+                                    <button class="more submit-link" onClick="javascript:more_data($(this))">(more)</button>
+                                    <div class ="full-data">{{ item.description }}</div>
+                            {% endifequal %}
+                            {% ifequal item.state "Answer" %}
+                           
+                                <span class="usernames dropdown" >
+                                    <div class="div1">
+                                        <span title="Answer Votes" class="like-count">{{ item.like_numbers }}</span>
+                                    </div>
+                                     <div class="menu div2" >
+                                        <input type="hidden" name="{{item.user_id}}" value="{{item.user_id}}">
+                                        <a class="usernames on_hover" href="/quora/user_detail/{{item.user_id}}">{{ item.userprofile_desc }}</a>
+                                     </div>
+
+                                    <div class="div3">
+                                    {% if item.userprofile_description != "" %}
+                                        ,{{ item.userprofile_description }}
+                                    {% endif %}
+                                    </div>
+                                </span>  
+                           
+                              <div class ="half-data"> 
+                                    {% if item.vote == 0 %}
+                                                {% autoescape off %}{{ item.answer }}{% endautoescape %}
+                                    {% else %}
+                                            {% autoescape off %}{{ item.small_img }}{% endautoescape %}
+                                    {% endif %}
+                              </div>
+                                    <button class="more submit-link" onClick="javascript:more_data($(this))">(more)</button>  
+                                    <div class = "full-data"> {% autoescape off %}{{item.answer }}{% endautoescape %}</div>
+                                    <p>
+                                        <button class="submit-link answer-comment" onclick="answer_comment_show(this);">
+                                            <span>{{ item.comm_count }}</span> 
+                                        </button>+ Comment(s)
+                                   
+                                        <button class="like submit-link" onclick="home_like_method(this,{{item.ans_id}});" 
+                                            id = "id-home-{{item.ans_id}}">Like</button>
+                                        <button class="unlike submit-link" onclick="home_unlike_method(this,{{item.ans_id}});" 
+                                         id = "id-home-unlike-{{item.ans_id}}">UnLike</button>                       
+                                        {% ifequal item.user_id request.user.id %}
+                                        <a  class="delete submit-link" id="{{ item.id }}" href= "#" onclick="home_page_post_delete(this);" url="/quora/answer-delete/{{ item.id }}/">Delete</a>
+                                           
+                                        {% endifequal %} 
+                              
+                                   </p>                              
+                                   {% endifequal %}
+                              
+                                   {% ifequal item.state  "Question" %}
+                                  <p> <span class="follow">
+                                       <a href="">Follow</a>
+                                   </span>
+                                   <span class="answer">
+                                       <a href="/quora/question/{{ item.tags|slugify }}/{{ item.title|slugify }}/" target="_blank"> {{ item.count }} Answer</a>
+                                   </span>
+                                   {% endifequal %}
+                               
+                                   {% ifequal item.user_id request.user.id %}
+                                      {% ifequal item.state "Question" %}
+                       
+                                    <a  class="delete submit-link" id="{{ item.id }}" href= "#" onclick="home_page_post_delete(this);" url="/quora/delete-question/{{ item.id }}/">Delete</a></p>
+                                        {% endifequal %}
+                       
+                                      
+                                    {% endifequal %}
+
+                                    <hr>
+                                </div>
+ 
+
+                            </div> 
+                          {% endfor %} 
+                    
+                 </div>
+
+              </div>  
+
+              <div class="span1"></div>
+            <div class="span4 sidebar-settings">
+                <p class="sidebar-p">Top Stories</p>
+                <p class="sidebar-p"><a class ="sidebar-options" href="{% url 'quora.views.all_unanswered_question' %}">Unanswered Questions</a></p>
+                <p class="sidebar-p"><a class ="sidebar-options" href ="" >Write Reviews</a></p>
+                <p class="sidebar-p"><a class ="sidebar-options" href ="" >Notifications</a></p>
+                <p class="sidebar-p"><a class ="sidebar-options" href ="" >Inbox </a></p>
+                <hr>
+                <h5>Trending Topics</h5>
+                <p id="trend"></p>
+           
+        </div>
+ </div> 
+    </div>
+
+    <div id="dialog" title="Confirm delete" style='display:none;'>Are you sure?</div> 
+
+ {% endblock %}
+
